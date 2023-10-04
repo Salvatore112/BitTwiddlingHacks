@@ -2,7 +2,7 @@
    without branching */
 
 int test(int x, int y) {
-    return  = x ^ ((x ^ y) & -(x < y));
+    return x ^ ((x ^ y) & -(x < y));
 }
 
 //template1 - RISC-V gcc 13.2.0, -O3, -march=rv64gc_zba_zbb_zbc_zbs

@@ -1,9 +1,7 @@
-/* Check if two ints have the same sign */
+/* Determining if an integer is a power of 2 */
 
-#include <stdbool.h>
-
-bool test(int x , int y) {
-    return ((x ^ y) < 0);  
+int test(int v) {    
+    return (v & (v - 1)) == 0;
 }
 
 //template1 - RISC-V gcc 13.2.0, -O3, -march=rv64gc_zba_zbb_zbc_zbs
