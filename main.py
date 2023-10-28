@@ -1,36 +1,53 @@
-import os, difflib
+import os, difflib, re
 
 configuration = "gcc -O3 -march=rv64gc_zba_zbb_zbc_zbs -s"
 
-def compare(file, template):
-    if difflib.SequenceMatcher(None, file, template).ratio() > 0.7:
-        return True;
+# Compare function using difflib
+def compareDifflib(file, template):
+    testfile_text = file.read()
+    template_text = template.read()
+    if difflib.SequenceMatcher(None, testfile_text, template_text).ratio() > 0.7:
+        return True
     else:
-        return False;
+        return False
+
+def compareArrays(file, template):
+    def make_instructions_array(lines_array, output_array):
+        for i in range(0, len(lines_array)):
+            instructions = " ".join(lines_array[i].split()).split(' ')
+            if instructions[0].startswith('.') or instructions[0].startswith('t'):
+                continue
+            else:
+                output_array.append(instructions[0])
+
+    file_lines_array = file.readlines()
+    template_lines_array = template.readlines()
+
+    file_instructions = []
+    template_instructions = []
+
+    make_instructions_array(file_lines_array, file_instructions)
+    make_instructions_array(template_lines_array, template_instructions)
+    a = 2
+
 
 testFolders = os.listdir(r"./Tests")
 os.chdir(r"./Tests/")
 
 testAmount = len(testFolders)
-count = 0;
-
-
+count = 0
 
 for folder in testFolders:
-
     templates = os.listdir(folder)
     os.chdir(folder)
-    os.system("gcc main.c -S")
+    os.system("gcc main.c -O3  -S")
     testFile = open("main.s", "r")
     for template in templates:
         if template.startswith("t"):
             template = open(template, "r")
-            testFileText = testFile.read();
-            templateText = template.read();
-
-            if compare(testFileText, templateText):
-                count += 1;
-                print(f"Test {folder} passed. {count}/{testAmount} Passed overall.");
-                break;
+            if compareArrays(testFile, template):
+                count += 1
+                print(f"Test {folder} passed. {count}/{testAmount} Passed overall.")
+                break
     testFile.close()
     os.chdir("..")
