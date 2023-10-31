@@ -30,6 +30,16 @@ def compareArrays(file, template):
     make_instructions_array(template_lines_array, template_instructions)
     a = 2
 
+    tempInstructionsCount = 0
+
+    for i in range(0, len(file_instructions) - 1):
+        if (file_instructions[i] == template_instructions[tempInstructionsCount]):
+            tempInstructionsCount += 1
+
+    if tempInstructionsCount == len(template_instructions):
+        return True
+    else:
+        return False
 
 testFolders = os.listdir(r"./Tests")
 os.chdir(r"./Tests/")
