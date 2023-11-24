@@ -1,6 +1,6 @@
 import os, difflib, re
 
-configuration = "clang -O3 -march=rv64gc_zba_zbb_zbc_zbs -s""
+configuration = "gcc -O3 -march=rv64gc_zba_zbb_zbc_zbs -s"
 
 # Compare function using difflib
 def compareDifflib(file, template):
