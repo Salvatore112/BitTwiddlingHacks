@@ -1,0 +1,17 @@
+name: script check
+
+on: [push]
+
+jobs:
+  build-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get_Python
+        run: sudo apt install python3
+      - name: Get_Python
+        run: sudo apt install python3-pip
+      - name: Get_Requirements
+        run: sudo apt req.txt
+      - name: Build
+        run: for f in $(find . -name "*.py"); do python -m py_compile $f; done
