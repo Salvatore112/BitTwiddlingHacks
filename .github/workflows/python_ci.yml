@@ -9,9 +9,9 @@ jobs:
       - uses: actions/checkout@v3
       - name: Get_Python
         run: sudo apt install python3
-      - name: Get_Python
+      - name: Get_Pip
         run: sudo apt install python3-pip
       - name: Get_Requirements
-        run: sudo apt req.txt
+        run: pip install req.txt
       - name: Build
         run: for f in $(find . -name "*.py"); do python -m py_compile $f; done
