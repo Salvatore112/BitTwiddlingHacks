@@ -12,6 +12,6 @@ jobs:
       - name: Get_Pip
         run: sudo apt install python3-pip
       - name: Get_Requirements
-        run: pip -r install req.txt
+        run: pip install -r req.txt
       - name: Build
         run: for f in $(find . -name "*.py"); do python -m py_compile $f; done
