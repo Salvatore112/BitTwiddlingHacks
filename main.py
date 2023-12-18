@@ -1,8 +1,8 @@
-import os, difflib, re
+import os, difflib, re, sys
 
 configuration = "gcc -O3 -march=rv64gc_zba_zbb_zbc_zbs -s"
 
-# Compare function using difflib
+# String comparing function using difflib
 def compareDifflib(file, template):
     testfile_text = file.read()
     template_text = template.read()
@@ -11,6 +11,7 @@ def compareDifflib(file, template):
     else:
         return False
 
+# Function that compares if instructions from one array are present in another in the same order
 def compareArrays(file, template):
     def make_instructions_array(lines_array, output_array):
         for i in range(0, len(lines_array)):
@@ -47,10 +48,17 @@ os.chdir(r"./Tests/")
 testAmount = len(testFolders)
 count = 0
 
+# Toolchain generation
+toolchan = ""
+if sys.argv[1] == "gcc":
+    toolChain= f"gcc main.c {sys.argv[3]} {sys.argv[2]} -S"
+else:
+    toolChain= f"clang main.c --target=riscv64-unknown-elf {sys.argv[3]} {sys.argv[2]} -S"
+
 for folder in testFolders:
     templates = os.listdir(folder)
     os.chdir(folder)
-    os.system("gcc main.c -O3  -S")
+    os.system(toolchan)
     testFile = open("main.s", "r")
     for template in templates:
         if template.startswith("t"):
@@ -61,5 +69,5 @@ for folder in testFolders:
                 break
     testFile.close()
     os.chdir("..")
-
+print(f"{count}/{testAmount} tests passed overall.\n")
 
