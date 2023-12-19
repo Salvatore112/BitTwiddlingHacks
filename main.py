@@ -49,16 +49,16 @@ testAmount = len(testFolders)
 count = 0
 
 # Toolchain generation
-toolchan = ""
-if sys.argv[1] == "gcc":
-    toolChain= f"gcc main.c {sys.argv[3]} {sys.argv[2]} -S"
+toolChain = ""
+if "gcc" in sys.argv[1]:
+    toolChain= f"{sys.argv[1]} main.c {sys.argv[3]} {sys.argv[2]} -S"
 else:
-    toolChain= f"clang main.c --target=riscv64-unknown-elf {sys.argv[3]} {sys.argv[2]} -S"
+    toolChain= f"{sys.argv[1]} main.c --target=riscv64-unknown-elf {sys.argv[3]} {sys.argv[2]} -S"
 
 for folder in testFolders:
     templates = os.listdir(folder)
     os.chdir(folder)
-    os.system(toolchan)
+    os.system(toolChain)
     testFile = open("main.s", "r")
     for template in templates:
         if template.startswith("t"):
