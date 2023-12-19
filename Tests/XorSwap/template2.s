@@ -1,4 +1,4 @@
-swap:
+test:
         lw      a4,0(a1)
         lw      a5,0(a0)
         xor     a5,a5,a4
