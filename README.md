@@ -8,7 +8,7 @@ The project is a script with a set of tests based on the Bit Twiddling Hacks art
 
 The script takes 3 mandatory flags:
 
-./python main.py &lt;compiler> &lt;optimization_flag> &lt;microarchitecture_flag>
+python main.py &lt;compiler> &lt;optimization_flag> &lt;microarchitecture_flag>
 
 where:
 
