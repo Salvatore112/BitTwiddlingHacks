@@ -71,11 +71,16 @@ for folder in testFolders:
     for template in templates:
         if template.startswith("t"):
             template = open(template, "r")
-            if compareArrays(testFile, template):
-                count += 1
-                print(f"Test {folder} passed. {count}/{testAmount} Passed overall.")
-                break
+            if len(sys.argv) == 5 and sys.argv[4] == "str":
+                if compareDifflib(testFile, template):
+                    count += 1
+                    print(f"Test {folder} passed. {count}/{testAmount} Passed overall.")
+                    break
+            else:
+                if compareArrays(testFile, template):
+                    count += 1
+                    print(f"Test {folder} passed. {count}/{testAmount} Passed overall.")
+                    break        
     testFile.close()
     os.chdir("..")
 print(f"{count}/{testAmount} tests passed overall.\n")
-
