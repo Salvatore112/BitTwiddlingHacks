@@ -13,17 +13,16 @@ def print_array(array):
     for i in range(0, len(array)):
         print(array[i])
 
-# Function that compares if instructions from one array are present in another in the same order
-def compareArrays(file, template):
-    
-    def make_instructions_array(lines_array, output_array):
+def make_instructions_array(lines_array, output_array):
         for i in range(0, len(lines_array)):
             instructions = " ".join(lines_array[i].split()).split(' ')
             if instructions[0].startswith('.') or instructions[0].startswith("tes"):
                 continue
             else:
                 output_array.append(instructions[0])
-    
+
+# Function that compares if instructions from one array are present in another in the same order
+def compareArrays(file, template):
     def isSubArray(array1, array2):
         n = len(array1)
         m = len(array2)
@@ -33,17 +32,6 @@ def compareArrays(file, template):
                     break
             else:  
                 return True
-
-    file_lines_array = file.readlines()
-    template_lines_array = template.readlines()
-
-    file_instructions = []
-    template_instructions = []
-
-    make_instructions_array(file_lines_array, file_instructions)
-    make_instructions_array(template_lines_array, template_instructions)
-
-    tempInstructionsCount = 0
     
     if isSubArray(file_instructions, template_instructions):
         return True
@@ -68,9 +56,17 @@ for folder in testFolders:
     os.chdir(folder)
     os.system(toolChain)
     testFile = open("main.s", "r")
+    
+    file_lines_array = testFile.readlines()
+    file_instructions = []
+    make_instructions_array(file_lines_array, file_instructions)
+    
     for template in templates:
         if template.startswith("t"):
             template = open(template, "r")
+            template_lines_array = template.readlines()
+            template_instructions = []
+            make_instructions_array(template_lines_array, template_instructions)
             if len(sys.argv) == 5 and sys.argv[4] == "str":
                 if compareDifflib(testFile, template):
                     count += 1
@@ -80,7 +76,7 @@ for folder in testFolders:
                 if compareArrays(testFile, template):
                     count += 1
                     print(f"Test {folder} passed. {count}/{testAmount} Passed overall.")
-                    break        
+                    break                 
     testFile.close()
     os.chdir("..")
 print(f"{count}/{testAmount} tests passed overall.\n")
