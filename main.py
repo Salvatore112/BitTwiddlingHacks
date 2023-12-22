@@ -58,7 +58,7 @@ for folder in testFolders:
     os.chdir(folder)
     os.system(toolChain)
     testFile = open("main.s", "r")
-    
+
     file_lines_array = testFile.readlines()
     file_instructions = []
     make_instructions_array(file_lines_array, file_instructions)
@@ -73,14 +73,14 @@ for folder in testFolders:
                 if compareDifflib(testFile, template):
                     count += 1
                     print(f"Test {folder} passed. {count}/{testAmount} Passed overall.")
-                    break   
+                    break
             else:
                 if compareArrays(testFile, template):
                     count += 1
                     print(f"Test {folder} passed. {count}/{testAmount} Passed overall.")
                     os.remove("main.s")
-                    break   
-        
+                    break
+
     testFile.close()
     os.chdir("..")
 
