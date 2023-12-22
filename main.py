@@ -4,8 +4,15 @@ import os, difflib, re, sys
 # String comparing function using difflib
 def compareDifflib(file, template):
     testfile_text = file.read()
+
+    testfile_text = str(testfile_text.splitlines())
+
+    m = re.search("test(.*?)ret", testfile_text)
+    if m:
+        testfile_text = m.group(1)
+
     template_text = template.read()
-    return difflib.SequenceMatcher(None, testfile_text, template_text).ratio() > 0
+    return difflib.SequenceMatcher(None, testfile_text, template_text).ratio() > 0.2
 
 
 def print_array(array):
@@ -23,21 +30,15 @@ def make_instructions_array(lines_array, output_array):
 
 
 # Function that compares if instructions from one array are present in another in the same order
-def compareArrays(file, template):
-    def isSubArray(array1, array2):
-        n = len(array1)
-        m = len(array2)
-        for i in range(n - m + 1):
-            for j in range(m):
-                if array1[i + j] != array2[j]:
-                    break
-            else:
-                return True
-
-    if isSubArray(file_instructions, template_instructions):
-        return True
-    else:
-        return False
+def isSubArray(array1, array2):
+    n = len(array1)
+    m = len(array2)
+    for i in range(n - m + 1):
+        for j in range(m):
+            if array1[i + j] != array2[j]:
+                break
+        else:
+            return True
 
 
 testFolders = os.listdir(r"./Tests")
@@ -59,26 +60,26 @@ for folder in testFolders:
     os.system(toolChain)
     testFile = open("main.s", "r")
 
-    file_lines_array = testFile.readlines()
     file_instructions = []
-    make_instructions_array(file_lines_array, file_instructions)
+    if len(sys.argv) == 4:
+        file_lines_array = testFile.readlines()
+        make_instructions_array(file_lines_array, file_instructions)
 
     for template in templates:
         if template.startswith("t"):
             template = open(template, "r")
-            template_lines_array = template.readlines()
-            template_instructions = []
-            make_instructions_array(template_lines_array, template_instructions)
             if len(sys.argv) == 5 and sys.argv[4] == "str":
                 if compareDifflib(testFile, template):
                     count += 1
                     print(f"Test {folder} passed. {count}/{testAmount} Passed overall.")
                     break
             else:
-                if compareArrays(testFile, template):
+                template_instructions = []
+                template_lines_array = template.readlines()
+                make_instructions_array(template_lines_array, template_instructions)
+                if isSubArray(file_instructions, template_instructions):
                     count += 1
                     print(f"Test {folder} passed. {count}/{testAmount} Passed overall.")
-                    os.remove("main.s")
                     break
 
     testFile.close()
