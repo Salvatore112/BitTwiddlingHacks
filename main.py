@@ -79,11 +79,11 @@ for folder in testFolders:
                 make_instructions_array(template_lines_array, template_instructions)
                 if isSubArray(file_instructions, template_instructions):
                     count += 1
-                    print(f"Test {folder} passed. {count}/{testAmount} Passed overall.")
+                    print(f"Test {folder} passed, {count}/{testAmount} Passed overall.")
                     break
 
     testFile.close()
     os.chdir("..")
 
 
-print(f"{count}/{testAmount} tests passed overall.\n")
+print(f"{count}/{testAmount} tests passed overall,\n")
