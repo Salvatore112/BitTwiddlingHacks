@@ -13,6 +13,7 @@ def make_instructions_array(lines_array: list, output_array: list):
         else:
             output_array.append(instructions[0])
 
+
 # Function that compares if instructions from one array are present in another in the same order
 def isSubArray(array1: list, array2: list):
     n = len(array1)
