@@ -1,6 +1,7 @@
 import os, difflib, re, sys
 from utils import *
 
+
 # String comparing function using difflib
 def compareDifflib(file, template):
     testfile_text = file.read()
@@ -13,6 +14,7 @@ def compareDifflib(file, template):
 
     template_text = template.read()
     return difflib.SequenceMatcher(None, testfile_text, template_text).ratio() > 0.2
+
 
 testFolders = os.listdir(r"./Tests")
 os.chdir(r"./Tests/")
