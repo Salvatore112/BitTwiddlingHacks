@@ -1,5 +1,6 @@
 ![Build](https://github.com/Salvatore112/BitTwiddlingHacks/actions/workflows/python_ci.yml/badge.svg)
 ![Lint](https://github.com/Salvatore112/BitTwiddlingHacks/actions/workflows/black.yml/badge.svg)
+![tests](https://github.com/Salvatore112/BitTwiddlingHacks/actions/workflows/unit-tests.yml/badge.svg)
 ## About The Project
 
 The project is a script with a set of tests based on the <a href="https://graphics.stanford.edu/~seander/bithacks.html">Bit Twiddling Hacks</a> article created to carry research on the different compilers' ability to generate bitmanip instructions wherever it can boost the efficiency of the program. This script is an enhanced version of the previous one of mine https://github.com/Salvatore112/bitmanip-script
